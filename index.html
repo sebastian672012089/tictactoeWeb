@@ -1,0 +1,169 @@
+<html>
+	<head>
+		<script>
+			var turn=0;
+			function refresh(){
+				turn=0;
+				var tempt="";
+				for(var i=0; i<document.getElementById("txtRow").value; i++){
+					tempt+="<tr height='100px'>";
+					for(var j=0; j<document.getElementById("txtCol").value; j++){
+						tempt+="<td align='center' id='cell"+i+"_"+j+"' onclick='inputTicTac("+i+","+j+");' width='100px'></td>";
+					}
+					tempt+="</tr>";
+				}
+				document.getElementById("tableTicTacToe").innerHTML=tempt;
+			}
+			function cekPosition(x, y, karakter){
+				var total = 1;
+				if(x-1>=0){
+					if(document.getElementById("cell"+(x-1)+"_"+y).innerHTML == karakter){
+						total ++;
+						
+						if(x-2>=0){
+							if(document.getElementById("cell"+(x-2)+"_"+y).innerHTML == karakter){
+								total ++;
+							}
+						}
+					}
+				}
+				if(x+1<document.getElementById("txtCol").value){
+					if(document.getElementById("cell"+(x+1)+"_"+y).innerHTML == karakter){
+						total ++;
+						
+						if(x+2<document.getElementById("txtCol").value){
+							if(document.getElementById("cell"+(x+2)+"_"+y).innerHTML == karakter){
+								total ++;
+							}
+						}
+					}
+				}
+				if (total>=3) return true;
+				total = 1;
+				if(y-1>=0){
+					if(document.getElementById("cell"+x+"_"+(y-1)).innerHTML == karakter){
+						total ++;
+						
+						if(y-2>=0){
+							if(document.getElementById("cell"+x+"_"+(y-2)).innerHTML == karakter){
+								total ++;
+							}
+						}
+					}
+				}
+				if(y+1<document.getElementById("txtRow").value){
+					if(document.getElementById("cell"+x+"_"+(y+1)).innerHTML == karakter){
+						total ++;
+						
+						if(y+2<document.getElementById("txtRow").value){
+							if(document.getElementById("cell"+x+"_"+(y+2)).innerHTML == karakter){
+								total ++;
+							}
+						}
+					}
+				}
+				if (total>=3) return true;
+				total = 1;
+				if(x-1>=0 && y-1>=0){
+					if(document.getElementById("cell"+(x-1)+"_"+(y-1)).innerHTML == karakter){
+						total ++;
+						
+						if(x-2>=0 && y-2>=0){
+							if(document.getElementById("cell"+(x-2)+"_"+(y-2)).innerHTML == karakter){
+								total ++;
+							}
+						}
+					}
+				}
+				if(x+1<document.getElementById("txtCol").value && y+1<document.getElementById("txtRow").value){
+					if(document.getElementById("cell"+(x+1)+"_"+(y+1)).innerHTML == karakter){
+						total ++;
+						
+						if(x+2<document.getElementById("txtCol").value && y+2<document.getElementById("txtRow").value){
+							if(document.getElementById("cell"+(x+2)+"_"+(y+2)).innerHTML == karakter){
+								total ++;
+							}
+						}
+					}
+				}
+				if (total>=3) return true;
+				total = 1;
+				if(x-1>=0 && y+1<document.getElementById("txtRow").value){
+					if(document.getElementById("cell"+(x-1)+"_"+(y+1)).innerHTML == karakter){
+						total ++;
+						
+						if(x-2>=0 && y+2<document.getElementById("txtRow").value){
+							if(document.getElementById("cell"+(x-2)+"_"+(y+2)).innerHTML == karakter){
+								total ++;
+							}
+						}
+					}
+				}
+				if(x+1<document.getElementById("txtCol").value && y-1>=0){
+					if(document.getElementById("cell"+(x+1)+"_"+(y-1)).innerHTML == karakter){
+						total ++;
+						
+						if(x+2<document.getElementById("txtCol").value && y-2>=0){
+							if(document.getElementById("cell"+(x+2)+"_"+(y-2)).innerHTML == karakter){
+								total ++;
+							}
+						}
+					}
+				}
+				if (total>=3) return true;
+				return false;
+			}
+			function inputTicTac(x, y){
+				if(document.getElementById("cell"+x+"_"+y).innerHTML == ""){
+					if(turn==0){//x
+						document.getElementById("cell"+x+"_"+y).innerHTML = "X";
+						turn=1;
+						if(cekPosition(x, y, "X"))
+						{
+							alert("X menang");
+							refresh();
+						}
+					}else{//O
+						document.getElementById("cell"+x+"_"+y).innerHTML = "O";
+						turn=0;
+						if(cekPosition(x, y, "O"))
+						{
+							alert("O menang");
+							refresh();
+						}
+					}
+				}
+			}
+		</script>
+		<style>
+			td{
+				font-family:"arial"; font-size:40pt; font-weight:bold;
+			}
+		</style>
+	</head>
+	<body>
+		<label for="txtRow">Rows</label>
+		<input type="number" id="txtRow" value="3"/>
+		<label for="txtCol">Columns</label>
+		<input type="number" id="txtCol" value="3"/>
+		<input type="button" value="Refresh" onclick="refresh();"/>
+		<hr/>
+		<table id="tableTicTacToe" border="1px" cellspacing="0px">
+			<tr height="100">
+				<td align="center" id="cell0_0" onclick="inputTicTac(0,0);" width="100px"></td>
+				<td align="center" id="cell0_1" onclick="inputTicTac(0,1);" width="100px"></td>
+				<td align="center" id="cell0_2" onclick="inputTicTac(0,2);" width="100px"></td>
+			</tr>
+			<tr height="100px">
+				<td align="center" id="cell1_0" onclick="inputTicTac(1,0);" width="100px"></td>
+				<td align="center" id="cell1_1" onclick="inputTicTac(1,1);" width="100px"></td>
+				<td align="center" id="cell1_2" onclick="inputTicTac(1,2);" width="100px"></td>
+			</tr>
+			<tr height="100px">
+				<td align="center" id="cell2_0" onclick="inputTicTac(2,0);" width="100px"></td>
+				<td align="center" id="cell2_1" onclick="inputTicTac(2,1);" width="100px"></td>
+				<td align="center" id="cell2_2" onclick="inputTicTac(2,2);" width="100px"></td>
+			</tr>
+		</table>
+	</body>
+</html>
